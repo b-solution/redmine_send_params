@@ -1,0 +1,6 @@
+<h2>Edit webhook setting</h2>
+
+<%= form_for :webhook_setting, method: :patch,  url: project_webhook_setting_path(@project, @webhook_setting) do |f| %>
+   <%= render partial: 'form', locals: {f: f}    %>
+<% end %>
+
