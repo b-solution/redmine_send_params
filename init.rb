@@ -24,6 +24,6 @@ end
 Rails.application.config.to_prepare do
   Issue.send(:include, RedmineCommet::Patches::IssuePatch)
   Project.send(:include, RedmineCommet::Patches::ProjectPatch)
-  Wiki.send(:include, RedmineCommet::Patches::WikiPatch)
+  # Wiki.send(:include, RedmineCommet::Patches::WikiPatch)
   Document.send(:include, RedmineCommet::Patches::DocumentPatch)
 end
