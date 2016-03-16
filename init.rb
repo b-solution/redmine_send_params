@@ -12,9 +12,11 @@ Redmine::Plugin.register :redmine_commet do
                                      :show, :edit, :update, :destroy],
                :require => :member
   end
+
   settings :default=>{
-      :sortable_position=>''
+      :redmine_domain=>''
   }, :partial => 'settings/redmine_commet/setting'
+
 
   menu :project_menu, :redmine_commet,
        { :controller => 'webhook_settings', :action => 'index' },
@@ -22,6 +24,7 @@ Redmine::Plugin.register :redmine_commet do
 end
 
 Rails.application.config.to_prepare do
+  Attachment.send(:include, RedmineCommet::Patches::AttachmentPatch)
   Issue.send(:include, RedmineCommet::Patches::IssuePatch)
   Project.send(:include, RedmineCommet::Patches::ProjectPatch)
   # Wiki.send(:include, RedmineCommet::Patches::WikiPatch)

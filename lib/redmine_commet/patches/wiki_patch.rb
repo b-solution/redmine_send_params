@@ -14,9 +14,11 @@ module  RedmineCommet
               url = webhook.url
               uri = URI(url)
               params = {title: '',
-                          body: '',
-                          url: '',
-                          createdAt: ''}.to_json
+                        body: '',
+                        url: '',
+                        createdAt: '',
+                        type: 'Wiki'
+              }
               res = Net::HTTP.post_form(uri, params)
               puts res.body
             end

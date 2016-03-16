@@ -4,7 +4,7 @@ module  RedmineCommet
     module ProjectPatch
       def self.included(base)
         base.class_eval do
-          has_many :webhook_setting
+          has_many :webhook_settings
         end
       end
     end

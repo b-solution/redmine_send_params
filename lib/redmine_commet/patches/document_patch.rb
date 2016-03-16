@@ -13,10 +13,13 @@ module  RedmineCommet
               require 'net/http'
               url = webhook.url
               uri = URI(url)
+              path = "#{Setting.plugin_redmine_commet[:redmine_domain]}#{Rails.application.routes.url_helpers.document_path(self)}"
               params= {title: self.title,
                        body: self.description,
-                       url: document_path(self) ,
-                       createdAt: self.created_on}.to_json
+                       url: path ,
+                       createdAt: self.created_on,
+                       type: 'Document'
+              }
               res = Net::HTTP.post_form(uri, params)
               puts res.body
             end
