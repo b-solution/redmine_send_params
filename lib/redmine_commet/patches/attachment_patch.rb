@@ -22,7 +22,8 @@ module  RedmineCommet
                         body: Base64.encode64(diff.read),
                         url: path,
                         createdAt: self.created_on,
-                        type: 'Attachment'
+                        type: 'Attachment',
+                        container: self.container.class.to_s
               }
               res = Net::HTTP.post_form(uri, params)
               puts res.body
