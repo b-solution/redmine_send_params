@@ -4,11 +4,8 @@ module  RedmineCommet
     module IssuePatch
       def self.included(base)
         base.class_eval do
-          after_save :send_data_to_commet
-
           def send_data_to_commet
             webhook = self.project.webhook_settings.where(send_issue: true).first
-
             if webhook
               require 'net/http'
               url = webhook.url
@@ -22,12 +19,16 @@ module  RedmineCommet
               }
               http = Net::HTTP.new(uri.host, uri.port)
               res = http.post(uri.path, params.to_json, {'Content-Type' =>'application/json'})
-               # res = Net::HTTP.post_form(uri, params)
               puts res.body
+              if res.code == "200"
+                return [true, res.code]
+              else
+                return [false, "Status for wenhook: #{res.code}"]
+              end
             end
-
+            return [true, '']
           rescue StandardError=> e
-            return puts e.message
+            return [false, e.message]
           end
 
         end
