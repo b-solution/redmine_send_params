@@ -49,7 +49,7 @@ class WebhookSettingsController < ApplicationController
 
   def webhook_setting_params
     params.require(:webhook_setting)
-    .permit(:url, :description, :send_issue, :send_wiki, :send_document, :send_file)
+    .permit(:url, :description, :post)
   end
 
   def find_webhook_setting
