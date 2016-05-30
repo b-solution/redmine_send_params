@@ -1,1 +1,1 @@
-# redmine-commet
+# redmine-send params
