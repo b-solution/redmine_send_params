@@ -13,7 +13,7 @@ Redmine::Plugin.register :redmine_send_params do
 
   menu :project_menu, :redmine_send_params,
        { :controller => 'webhook_settings', :action => 'index' },
-       :caption => 'Commet webhooks', :after => :activity, :param => :project_id
+       :caption => 'webhooks', :after => :activity, :param => :project_id
 end
 
 Rails.application.config.to_prepare do

@@ -1,6 +1,5 @@
 class CreateWebhookSettings < ActiveRecord::Migration
   def change
-    drop_table :webhook_settings
     create_table :webhook_settings do |t|
       t.integer :project_id
       t.string :url
