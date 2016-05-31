@@ -1,6 +1,7 @@
 class WebhookSetting < ActiveRecord::Base
   unloadable
   belongs_to :project
+  belongs_to :issue_query
 
   validate :check_url
 

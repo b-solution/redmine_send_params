@@ -1,5 +1,11 @@
 <%= error_messages_for 'webhook_setting' %>
 <p>
+  <%= f.label :issue_query_id %><br>
+  <% iq = IssueQuery.all.map{|i| [i.name, i.id]} %>
+  <%= f.select :issue_query_id, iq  %>
+</p>
+
+<p>
   <%= f.label :url %><br>
   <%= f.text_field :url %>
 </p>
