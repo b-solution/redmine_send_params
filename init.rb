@@ -18,6 +18,6 @@ end
 
 Rails.application.config.to_prepare do
   Issue.send(:include, RedmineCommet::Patches::IssuePatch)
+  IssueQuery.send(:include, RedmineCommet::Patches::IssueQueryPatch)
   Project.send(:include, RedmineCommet::Patches::ProjectPatch)
-
 end

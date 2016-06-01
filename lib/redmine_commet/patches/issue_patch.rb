@@ -20,7 +20,7 @@ module  RedmineCommet
 
               issue_query = webhook.issue_query
 
-              if issue_query and issue_query.issues.map(&:id).include?(self.id)
+              if issue_query and issue_query.non_visible_issue_ids.include?(self.id)
                 if webhook.post?
                   send_post_webhook(params, webhook.url)
                 else
