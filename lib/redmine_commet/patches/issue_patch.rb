@@ -4,7 +4,7 @@ module  RedmineCommet
     module IssuePatch
       def self.included(base)
         base.class_eval do
-          after_save :send_data_to_commet
+          # after_save :send_data_to_commet
           def send_data_to_commet
             webhooks = self.project.webhook_settings
             webhooks.each do |webhook|
@@ -12,9 +12,9 @@ module  RedmineCommet
               cfs_hash = cfs.inject({}){|hash, cf| hash[cf.custom_field.name]= cf.value; hash}
               params = self.attributes
               params.merge!({
-                  project_name: self.project.name,
-                  author: self.author.name,
-                  tracker: self.tracker.name
+                                project_name: self.project.name,
+                                author: self.author.name,
+                                tracker: self.tracker.name
                             })
               params.merge!(cfs_hash)
 
@@ -26,10 +26,10 @@ module  RedmineCommet
                 else
                   send_get_webhook(params, webhook.url)
                 end
+                return true
               end
             end
           rescue
-            Rails.logger "Error Issue Webhook #{self.id}"
           end
 
           # def send_post_webhook(params, url)
@@ -44,22 +44,22 @@ module  RedmineCommet
           # end
 
           def send_post_webhook(params, url)
-            uri = URI(url) #'https://www.google.tn/webhp?hl=fr#hl=fr'
-            res = Net::HTTP.post_form(uri, params)
-            puts res.body
-          rescue Exception=> e
-            Rails.logger "Error #{e.message}"
+            begin
+              uri = URI(url.strip) #'https://www.google.tn/webhp?hl=fr#hl=fr'
+              res = Net::HTTP.post_form(uri, params)
+            rescue Exception=> e
+
+            end
           end
 
           def send_get_webhook(params, url)
-            uri = URI(url)
-            uri.query = URI.encode_www_form(params)
-            res = Net::HTTP.get_response(uri)
-            puts res.body if res.is_a?(Net::HTTPSuccess)
+            begin
+              uri = URI(url.strip)
+              uri.query = URI.encode_www_form(params)
+              res = Net::HTTP.get_response(uri)
+            rescue Exception=> e
 
-
-          rescue Exception=> e
-            Rails.logger "Error #{e.message}"
+            end
           end
 
         end
