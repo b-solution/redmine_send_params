@@ -10,7 +10,12 @@ module  RedmineCommet
             webhooks.each do |webhook|
               cfs = self.visible_custom_field_values
               cfs_hash = cfs.inject({}){|hash, cf| hash[cf.custom_field.name]= cf.value; hash}
-              params = {subject: self.subject }
+              params = self.attributes
+              params.merge!({
+                  project_name: self.project.name,
+                  author: self.author.name,
+                  tracker: self.tracker.name
+                            })
               params.merge!(cfs_hash)
 
               issue_query = webhook.issue_query
