@@ -4,7 +4,7 @@ module  RedmineCommet
     module IssuePatch
       def self.included(base)
         base.class_eval do
-          # after_save :send_data_to_commet
+          after_save :send_data_to_commet
           def send_data_to_commet
             webhooks = self.project.webhook_settings
             webhooks.each do |webhook|
